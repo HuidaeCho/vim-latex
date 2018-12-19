@@ -801,7 +801,7 @@ function! Tex_PositionPreviewWindow(filename)
 	if errfile != ''
 		exec 'silent! bot pedit +/(\\(\\f\\|\\[\\|\]\\|\\s\\)*'.errfile.'/ '.a:filename
 	else
-		exec 'bot pedit +0 '.a:filename
+		exec 'bot pedit +0 '.fnameescape(a:filename)
 	endif
 	" Goto the preview window
 	" TODO: This is not robust enough. Check that a wincmd j actually takes
