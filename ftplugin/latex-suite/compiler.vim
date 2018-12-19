@@ -118,10 +118,10 @@ function! Tex_CompileLatex()
 	" all! Therefore for the moment, do not attempt to handle spaces in the
 	" file name.
 	if exists('b:fragmentFile')
-		let mainfname = expand('%:p:t')
+		let mainfname = fnameescape(expand('%:p:t'))
 		call Tex_CD(expand('%:p:h'))
 	else
-		let mainfname = Tex_GetMainFileName(':p:t')
+		let mainfname = fnameescape(Tex_GetMainFileName(':p:t'))
 		call Tex_CD(Tex_GetMainFileName(':p:h'))
 	end
 
@@ -236,10 +236,10 @@ function! Tex_ViewLaTeX()
 	if !exists('b:fragmentFile')
 		" cd to the location of the file to avoid having to deal with spaces
 		" in the directory name.
-		let mainfname = Tex_GetMainFileName(':p:t:r')
+		let mainfname = fnameescape(Tex_GetMainFileName(':p:t:r'))
 		call Tex_CD(Tex_GetMainFileName(':p:h'))
 	else
-		let mainfname = expand("%:p:t:r")
+		let mainfname = fnameescape(expand("%:p:t:r"))
 		call Tex_CD(expand("%:p:h"))
 	endif
 
@@ -310,7 +310,7 @@ function! Tex_ViewLaTeX()
 
 	end
 
-	let execString = substitute(execString, '\V$*', mainfname, 'g')
+	let execString = substitute(execString, '\V$*', fnameescape(mainfname), 'g')
 	call Tex_Debug("Tex_ViewLaTeX: execString = ".execString, "comp")
 
 	exec 'silent! !'.execString
